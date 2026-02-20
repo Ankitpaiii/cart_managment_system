@@ -6,7 +6,7 @@ const getBaseUrl = () => {
         const hostname = window.location.hostname;
         return `http://${hostname}:5002/api`;
     }
-    return 'http://localhost:5002/api';
+    return 'http://127.0.0.1:5002/api';
 };
 
 const API_BASE_URL = getBaseUrl();
