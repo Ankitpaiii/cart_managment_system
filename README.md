@@ -3,7 +3,7 @@
 A modern, full-stack e-commerce web application featuring state-of-the-art **Face Liveness Authentication**. Built with **Next.js**, **Express.js**, **Prisma**, and **PostgreSQL**, this project implements advanced database concepts (Triggers, Cursors) and a premium, responsive UI.
 
 ### 🌐 Live Deployment
-* **Frontend (Vercel):** [https://cart-managment-system-8vkd4y7jj-ankits-projects-8d5f6fec.vercel.app](https://cart-managment-system.vercel.app/)
+* **Frontend (Vercel):** [https://cart-managment-system.vercel.app/](https://cart-managment-system.vercel.app/)
 * **Backend API (Render):** [https://cart-managment-api.onrender.com/health](https://cart-managment-api.onrender.com/health)
 
 ---
