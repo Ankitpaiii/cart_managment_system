@@ -1,72 +1,62 @@
-# Online Shopping System
+# 🛒 Decentralized E-Commerce & Proof-of-Life Authentication System
 
-A modern, full-stack e-commerce web application built with Next.js, Express.js, Prisma, and PostgreSQL. Features a minimal, elegant, collection-style UI inspired by premium e-commerce sites.
+A modern, full-stack e-commerce web application featuring state-of-the-art **Face Liveness Authentication**. Built with **Next.js**, **Express.js**, **Prisma**, and **PostgreSQL**, this project implements advanced database concepts (Triggers, Cursors) and a premium, responsive UI.
 
-## 🎯 Project Overview
+### 🌐 Live Deployment
+* **Frontend (Vercel):** [https://cart-managment-system-8vkd4y7jj-ankits-projects-8d5f6fec.vercel.app](https://cart-managment-system-8vkd4y7jj-ankits-projects-8d5f6fec.vercel.app)
+* **Backend API (Render):** [https://cart-managment-api.onrender.com/health](https://cart-managment-api.onrender.com/health)
 
-This is an academic team project demonstrating:
-- Full-stack web development
-- RESTful API architecture
-- Database design following ER diagrams
-- Modern frontend with React/Next.js
-- Type-safe development with TypeScript
+---
+
+## 🎯 High-Level Architecture & Features
+
+### 1. Advanced Security & Face Liveness
+* Replaced traditional passwords with **Face-API.js** biometric authentication.
+* Real-time webcam integration for Proof-of-Life verification during Registration and Login.
+* High-security verification blocking spoofing and flat-image attacks.
+
+### 2. Advanced Database Concepts (PostgreSQL)
+* **Triggers:** Automated stock decrementation upon order placement, preventing negative stock. Custom `log_audit_event()` triggers track all administrative modifications.
+* **Stored Procedures & Cursors:** Implemented `get_categories_report()` using SQL Cursors to loop through categories and calculate live aggregate stock values mathematically at the database layer.
+
+### 3. Premium UI/UX Design
+* Modern aesthetic using Tailwind CSS & Shadcn/UI.
+* Glassmorphism, dynamic animations (Framer Motion), and responsive category cards.
+* Skeleton loaders and beautiful Toast notifications for state changes.
+
+---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **Framework**: Next.js 15 (React)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
-- **Animations**: Framer Motion
-- **State Management**: 
-  - Zustand (cart, auth)
-  - TanStack Query (server state)
-- **HTTP Client**: Axios
+### Frontend Architecture
+* **Framework**: Next.js 15 (React 19)
+* **Language**: TypeScript
+* **Styling**: Tailwind CSS
+* **Biometrics**: face-api.js
+* **State Management**: Zustand
+* **Deployment**: Vercel
 
-### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Language**: TypeScript
-- **Database**: PostgreSQL
-- **ORM**: Prisma
-- **Authentication**: JWT + bcrypt
-- **Security**: Helmet, CORS
+### Backend Architecture
+* **Runtime**: Node.js
+* **Framework**: Express.js
+* **Language**: TypeScript
+* **Database**: PostgreSQL (Hosted on Render)
+* **ORM**: Prisma
+* **Authentication**: JWT & Bcrypt (fallback)
+* **Deployment**: Render Web Services
 
-## 📁 Project Structure
+---
 
-```
-Portfolio/
-├── frontend/           # Next.js application
-│   ├── app/           # App router pages
-│   ├── components/    # React components
-│   ├── lib/           # Utilities, stores, API
-│   └── public/        # Static assets
-│
-├── backend/           # Express.js API
-│   ├── src/
-│   │   ├── controllers/  # Request handlers
-│   │   ├── routes/       # API routes
-│   │   ├── middleware/   # Auth, error handling
-│   │   └── utils/        # Prisma, JWT utilities
-│   └── prisma/
-│       └── schema.prisma # Database schema
-│
-├── tech_stack.md         # Technology decisions
-├── implementation_plan.md # Development roadmap
-└── design_doc.md         # UI/UX specifications
-```
-
-## 🚀 Getting Started
+## 🚀 Running Locally
 
 ### Prerequisites
-- Node.js 18+ and npm
-- PostgreSQL database
+* Node.js v20+
+* Local PostgreSQL Database or external Postgres Provider
 
-### 1. Clone and Install
-
+### 1. Clone & Install
 ```bash
-cd Portfolio
+git clone https://github.com/Ankitpaiii/cart_managment_system.git
+cd cart_managment_system
 
 # Install backend dependencies
 cd backend
@@ -74,165 +64,88 @@ npm install
 
 # Install frontend dependencies
 cd ../frontend
-npm install
+npm install --legacy-peer-deps
 ```
 
 ### 2. Configure Environment Variables
+Create `.env` files in both directories.
 
 **Backend** (`backend/.env`):
 ```env
-DATABASE_URL="postgresql://username:password@localhost:5432/online_shopping_db"
-PORT=5000
+DATABASE_URL="postgresql://user:pass@localhost:5432/online_shopping_db"
+PORT=5002
 NODE_ENV=development
-JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_SECRET=super-secret-key
 JWT_EXPIRES_IN=7d
 FRONTEND_URL=http://localhost:3000
 ```
 
 **Frontend** (`frontend/.env.local`):
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_URL=http://localhost:5002/api
 ```
 
-### 3. Set Up Database
-
+### 3. Setup Database & Seed
 ```bash
 cd backend
+# Push the schema to your database
+npx prisma db push
 
-# Generate Prisma Client
-npm run prisma:generate
+# Run the advanced SQL file to add Triggers and Cursors
+npx prisma db execute --file prisma/final_cleanup.sql --schema prisma/schema.prisma
 
-# Run migrations
-npm run prisma:migrate
-
-# (Optional) Open Prisma Studio
-npm run prisma:studio
+# Seed database with sample products
+npm run seed
 ```
 
 ### 4. Start Development Servers
-
-**Terminal 1 - Backend:**
+**Backend:**
 ```bash
 cd backend
 npm run dev
+# Server running on http://localhost:5002
 ```
-Server runs on `http://localhost:5000`
 
-**Terminal 2 - Frontend:**
+**Frontend:**
 ```bash
 cd frontend
 npm run dev
+# App running on http://localhost:3000
 ```
-App runs on `http://localhost:3000`
-
-## 📚 API Documentation
-
-### Authentication
-- `POST /api/auth/register` - Register new customer
-- `POST /api/auth/login` - Login customer
-- `GET /api/auth/profile` - Get profile (protected)
-
-### Products
-- `GET /api/products` - Get all products (pagination, filtering)
-- `GET /api/products/:id` - Get product by ID
-
-### Categories
-- `GET /api/categories` - Get all categories
-- `GET /api/categories/:id` - Get category with products
-
-### Orders
-- `GET /api/orders` - Get customer orders (protected)
-- `POST /api/orders` - Create order (protected)
-- `GET /api/orders/:id` - Get order details (protected)
-
-### Payments
-- `POST /api/payments` - Record payment (protected)
-- `GET /api/payments/:orderId` - Get payment (protected)
-
-### Addresses
-- `GET /api/addresses` - Get customer addresses (protected)
-- `POST /api/addresses` - Create address (protected)
-- `PUT /api/addresses/:id` - Update address (protected)
-- `DELETE /api/addresses/:id` - Delete address (protected)
-
-## 🎨 Design Philosophy
-
-- **Minimal & Elegant**: Clean layouts with generous spacing
-- **Image-Forward**: Product imagery takes center stage
-- **Subtle Animations**: Purposeful, not decorative
-- **Responsive**: Mobile-first design approach
-- **Accessible**: Keyboard navigation and ARIA labels
-
-## 📦 Database Schema
-
-7 core models following the ER diagram:
-- **Customer**: User accounts
-- **Address**: Customer addresses
-- **Category**: Product categories
-- **Product**: Product catalog
-- **Order**: Customer orders
-- **OrderItem**: Order line items
-- **Payment**: Payment records
-
-## 🔐 Security Features
-
-- Password hashing with bcrypt
-- JWT-based authentication
-- Protected API routes
-- CORS configuration
-- Security headers with Helmet
-- Input validation
-
-## 🧪 Testing
-
-```bash
-# Backend (when implemented)
-cd backend
-npm test
-
-# Frontend (when implemented)
-cd frontend
-npm test
-```
-
-## 📝 Development Scripts
-
-### Backend
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run prisma:generate` - Generate Prisma Client
-- `npm run prisma:migrate` - Run migrations
-- `npm run prisma:studio` - Open Prisma Studio
-
-### Frontend
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-
-## 🎓 Academic Context
-
-This project demonstrates:
-- ER diagram to database implementation
-- RESTful API design principles
-- Modern web development practices
-- Type-safe full-stack development
-- State management patterns
-- Authentication and authorization
-
-## 👥 Team Collaboration
-
-- Use Git for version control
-- Test APIs with Postman
-- Review code before merging
-- Follow TypeScript best practices
-- Maintain clear documentation
-
-## 📄 License
-
-This is an academic project for educational purposes.
 
 ---
 
-**Built with ❤️ for learning and demonstration**
+## 📚 API Endpoints
+
+### 🔐 Auth & Verification
+* `POST /api/auth/register` - Save face vector & credentials
+* `POST /api/auth/verify` - Liveness login via webcam
+* `POST /api/auth/login` - Fallback standard login
+
+### 🛒 E-Commerce
+* `GET /api/products` - Fetch paginated product catalog
+* `GET /api/categories` - Fetch categories with product counts
+* `POST /api/orders` - Checkout & triggers DB stock subtraction
+* `GET /api/orders` - Customer order history
+* `GET /api/admin/dashboard` - Admin analytics via Stored Procedures
+
+---
+
+## 📂 Project Structure
+```
+cart_management_system/
+├── frontend/                     # Next.js Application
+│   ├── app/                      # Next.js App Router (Pages)
+│   ├── components/ui/            # Reusable Shadcn Components
+│   ├── lib/api/                  # Axios Interceptors & Client
+│   └── public/models/            # Face-API Machine Learning Models
+│
+├── backend/                      # Express API
+│   ├── prisma/                   # Schema, Seeds, and Raw SQL
+│   ├── src/controllers/          # API Logic
+│   ├── src/middleware/           # JWT & Error Handling
+│   └── src/index.ts              # Server Entry Point
+```
+
+---
+**Built for modern e-commerce & high-security biometric research.**
