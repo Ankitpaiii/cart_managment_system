@@ -375,6 +375,14 @@ export default function AdminPage() {
                                                     >
                                                         Mark as Delivered
                                                     </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="destructive"
+                                                        className="flex-1"
+                                                        onClick={() => handleUpdateOrderStatus(order.id, 'CANCELLED')}
+                                                    >
+                                                        Reject
+                                                    </Button>
                                                 </div>
                                             )}
                                         </div>
