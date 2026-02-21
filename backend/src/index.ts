@@ -36,10 +36,11 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Parse URL-encoded bodies
 
-// Health check route
-app.get('/health', (req: Request, res: Response) => {
-    res.status(200).json({ status: 'OK', message: 'Server is running' });
-});
+// Health check routes
+app.get('/health', (req: Request, res: Response) => res.status(200).json({ status: 'OK', message: 'Server is running' }));
+app.get('/healthz', (req: Request, res: Response) => res.status(200).json({ status: 'OK', message: 'Server is running' }));
+app.get('/', (req: Request, res: Response) => res.status(200).json({ status: 'OK', message: 'API is running' }));
+
 
 // API Routes
 app.use('/api/auth', authRoutes);
