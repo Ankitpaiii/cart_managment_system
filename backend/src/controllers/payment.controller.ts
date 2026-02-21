@@ -59,7 +59,7 @@ export const getPayment = async (req: Request, res: Response, next: NextFunction
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { orderId } = req.params;
+        const orderId = req.params.orderId as string;
 
         const payment = await prisma.payment.findUnique({
             where: { orderId },

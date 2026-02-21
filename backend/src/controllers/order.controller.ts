@@ -34,7 +34,7 @@ export const getOrder = async (req: Request, res: Response, next: NextFunction) 
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { id } = req.params;
+        const id = req.params.id as string;
 
         const order = await prisma.order.findUnique({
             where: { id },

@@ -62,7 +62,7 @@ export const updateAddress = async (req: Request, res: Response, next: NextFunct
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { id } = req.params;
+        const id = req.params.id as string;
         const { street, city, state, zipCode, country, isDefault } = req.body;
 
         // Verify ownership
@@ -103,7 +103,7 @@ export const deleteAddress = async (req: Request, res: Response, next: NextFunct
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { id } = req.params;
+        const id = req.params.id as string;
 
         // Verify ownership
         const existingAddress = await prisma.address.findUnique({ where: { id } });

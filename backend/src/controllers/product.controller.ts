@@ -42,7 +42,7 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
+        const id = req.params.id as string;
 
         // Try searching by ID first, then by slug
         const product = await prisma.product.findFirst({
@@ -98,7 +98,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
+        const id = req.params.id as string;
         const { categoryId, name, description, price, stock, imageUrl, slug } = req.body;
 
         const product = await prisma.product.update({
@@ -125,7 +125,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
+        const id = req.params.id as string;
 
         await prisma.product.delete({ where: { id } });
 
