@@ -190,7 +190,11 @@ export default function AdminPage() {
     const handleUpdateOrderStatus = async (orderId: string, status: string) => {
         try {
             await adminService.updateOrderStatus(orderId, status);
-            alert(`Order successfully marked as ${status}`);
+            let msg = `Order updated to ${status}`;
+            if (status === 'PROCESSING') msg = 'Order Accepted';
+            if (status === 'CANCELLED') msg = 'Order Rejected';
+            if (status === 'DELIVERED') msg = 'Order marked as Delivered';
+            alert(msg);
             fetchDashboard();
         } catch (e: any) {
             const errorMsg = e.response?.data?.error || 'Failed to update order status';
