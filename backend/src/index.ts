@@ -20,7 +20,7 @@ import adminRoutes from './routes/admin.routes';
 import { errorHandler } from './middleware/errorHandler';
 
 const app: Application = express();
-const PORT = 5002;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5002;
 
 // Middleware
 app.use(helmet()); // Security headers
